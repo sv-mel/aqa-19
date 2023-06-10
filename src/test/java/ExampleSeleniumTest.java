@@ -7,14 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ExampleSeleniumTest {
-
-    static ChromeDriver driver;
-
-    @BeforeAll
-    public static void setBeforeAll() {
-        System.setProperty("webdriver.http.factory", "jdk-http-client");
-    }
+public class ExampleSeleniumTest extends BaseTest{
 
     @BeforeEach
     public void openBeforeEach() {
@@ -22,11 +15,7 @@ public class ExampleSeleniumTest {
         driver.get("https://www.tkani-feya.ru/");
     }
 
-    @AfterEach
-    public void closeAfterEach() {
-        driver.close();
 
-    }
     @Test
     public void shouldSearchTextile() {
         //[name="find"]
