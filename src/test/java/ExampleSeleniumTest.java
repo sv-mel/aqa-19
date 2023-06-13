@@ -13,6 +13,7 @@ public class ExampleSeleniumTest extends BaseTest{
     public void openBeforeEach() {
         driver = new ChromeDriver();
         driver.get("https://www.tkani-feya.ru/");
+
     }
 
 
