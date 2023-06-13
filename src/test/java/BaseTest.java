@@ -1,3 +1,4 @@
+import com.github.javafaker.Faker;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.Dimension;
@@ -12,6 +13,8 @@ public class BaseTest {
     String baseUrl;
 
     WebDriverWait wait;
+
+    Faker faker = new Faker();
 
     @BeforeAll
     public static void setBeforeAll() {

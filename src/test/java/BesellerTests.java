@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
+import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,7 +23,7 @@ public class BesellerTests extends BaseTest{
     public void openBeforeEach() {
         driver = new ChromeDriver();
         baseUrl = "https://demo.beseller.by";
-        wait = new WebDriverWait(driver, Duration.of(7, ChronoUnit.SECONDS));
+        wait = new WebDriverWait(driver, Duration.of(15, ChronoUnit.SECONDS));
 
     }
 
@@ -58,6 +59,34 @@ public class BesellerTests extends BaseTest{
        // assertEquals(product.findElement(By.cssSelector(".ok-table-el.f-tac.-size-half.hidden-xs")).getText(),"шт.");
         assertEquals(
                 product.findElement(By.cssSelector("[data-product-item-sum] [data-price-value]")).getText(), "49500");
+
+
+
+        //оформление заказа
+//        String fio = faker.name().fullName();
+//        String address = faker.address().fullAddress();
+//        String phone = faker.phoneNumber().phoneNumber();
+//        String comment = faker.lorem().sentence();
+
+        driver.findElement(By.name("fio")).sendKeys(faker.name().fullName());
+        driver.findElement(By.name("registration")).sendKeys(faker.address().fullAddress());
+        driver.findElement(By.name("phone")).sendKeys(faker.phoneNumber().phoneNumber());
+        driver.findElement(By.name("comment")).sendKeys(faker.lorem().sentence());
+
+        //переход на страницу Заказ оформлен
+        driver.findElement(By.id("terms_btn_cart_fast")).click();
+        assertEquals(driver.getCurrentUrl(), "https://demo.beseller.by/shcart/finish");
+//        assertThat(driver.findElement(By.className("ok-order__title")).getText()).contains("ЗАКАЗ №", "ОФОРМЛЕН");
+
+        //проверяем данные в заказе
+        WebElement orderedProduct = driver.findElements(By.cssSelector(".ok-table-row")).get(0);
+       // assertThat(orderedProduct.findElement(By.cssSelector(".ok-order__image img")).getAttribute("alt")).contains("TOYOTA1 ESOA 21");
+        assertThat(orderedProduct.findElement(By.className("ok-order__productName")).getText()).contains("TOYOTA1 ESOA 21");
+        assertThat(orderedProduct.findElement(By.className("ok-order__text")).getText()).contains("20102");
+        assertEquals(orderedProduct.findElement(By.cssSelector(".ok-order__count")).getText(), "1");
+        // assertEquals(product.findElement(By.cssSelector(".ok-table-el.f-tac.-size-half.hidden-xs")).getText(),"шт.");
+        assertEquals(orderedProduct.findElement(By.cssSelector("[data-finish-order-value] [data-price-value]")).getText(), "49500");
+
 
     }
 
